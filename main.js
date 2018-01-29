@@ -117,6 +117,7 @@ function listenToUser(canvas) {
   if(document.body.ontouchstart !== undefined){
     // 触屏设备 苏菲就是个触屏设备啊哥
     canvas.ontouchstart = function(aaa){
+      aaa.preventDefault();     
       var x = aaa.touches[0].clientX
       var y = aaa.touches[0].clientY
       console.log(x,y)
@@ -132,6 +133,7 @@ function listenToUser(canvas) {
     }
     canvas.ontouchmove = function(aaa){
       console.log('边摸边动')
+      aaa.preventDefault();  
       var x = aaa.touches[0].clientX
       var y = aaa.touches[0].clientY
 
@@ -150,6 +152,7 @@ function listenToUser(canvas) {
       }
     }
     canvas.ontouchend = function(){
+      aaa.preventDefault();  
       console.log('摸完了')
       using = false
     }
