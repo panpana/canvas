@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-Hans">
   <link rel="stylesheet" href="./style.css">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <title>我的画板</title>
-  <canvas id="canvas" width=300 height=300></canvas>
+  <canvas disable-scroll="true" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" id="canvas" width=300 height=300></canvas>
   <div id=actions class="actions">
     <svg id=pen class="active icon">
       <use xlink:href="#icon-pen"></use>
@@ -31,6 +32,6 @@
   </ol>
   
   <script src="./main.js"></script>
-  <script src="http://at.alicdn.com/t/font_478967_6n4o5i5mnff4unmi.js"></script>
+  <script src="https://at.alicdn.com/t/font_478967_6n4o5i5mnff4unmi.js"></script>
   
 </html>
