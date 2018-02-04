@@ -157,6 +157,7 @@ function listenToUser(canvas) {
   }else{
     // 非触屏设备
     canvas.onmousedown = function(aaa) {
+      event.preventDefault()
       var x = aaa.clientX
       var y = aaa.clientY
       using = true
@@ -170,6 +171,7 @@ function listenToUser(canvas) {
       }
     }
     canvas.onmousemove = function(aaa) {
+      event.preventDefault()
       var x = aaa.clientX
       var y = aaa.clientY
 
@@ -189,6 +191,7 @@ function listenToUser(canvas) {
 
     }
     canvas.onmouseup = function(aaa) {
+      event.preventDefault()
       using = false
     }
   }
