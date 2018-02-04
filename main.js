@@ -117,6 +117,7 @@ function listenToUser(canvas) {
   if(document.body.ontouchstart !== undefined){
     // 触屏设备 
     canvas.ontouchstart = function(aaa){
+      e.preventDefault()
       var x = aaa.touches[0].clientX
       var y = aaa.touches[0].clientY
       console.log(x,y)
@@ -131,6 +132,7 @@ function listenToUser(canvas) {
       }
     }
     canvas.ontouchmove = function(aaa){
+      e.preventDefault()
       var x = aaa.touches[0].clientX
       var y = aaa.touches[0].clientY
 
@@ -149,11 +151,13 @@ function listenToUser(canvas) {
       }
     }
     canvas.ontouchend = function(){
+      e.preventDefault()
       using = false
     }
   }else{
     // 非触屏设备
     canvas.onmousedown = function(aaa) {
+      e.preventDefault()
       var x = aaa.clientX
       var y = aaa.clientY
       using = true
@@ -167,6 +171,7 @@ function listenToUser(canvas) {
       }
     }
     canvas.onmousemove = function(aaa) {
+      e.preventDefault()
       var x = aaa.clientX
       var y = aaa.clientY
 
@@ -186,6 +191,7 @@ function listenToUser(canvas) {
 
     }
     canvas.onmouseup = function(aaa) {
+      e.preventDefault()
       using = false
     }
   }
