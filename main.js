@@ -197,5 +197,5 @@ function listenToUser(canvas) {
   }
 
 }
-
+console.log(1)
 
