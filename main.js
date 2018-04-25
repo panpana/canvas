@@ -1,10 +1,6 @@
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-var lineWidth = 5;
-
-
-
-
+var lineWidth = 5
 
 autoSetCanvasSize(canvas)
 
@@ -24,8 +20,6 @@ eraser.onclick = function(){
   
 }
 clear.onclick = function(){
-
-
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
 download.onclick = function(){
@@ -124,74 +118,34 @@ function listenToUser(canvas) {
     // 触屏设备 
     canvas.ontouchstart = function(aaa){
       event.preventDefault()
-      var x1 = aaa.touches[0].clientX
-      var y1 = aaa.touches[0].clientY
-      console.log(x1,y1)
+      var x = aaa.touches[0].clientX
+      var y = aaa.touches[0].clientY
+      console.log(x,y)
       using = true
       if (eraserEnabled) {
-        context.save()
-        context.beginPath()
-        context.arc(x1,y1,10,0,2*Math.PI);
-        context.clip()
-        context.clearRect(0,0,canvas.width,canvas.height);
-        context.restore();
-    } else {
+        context.clearRect(x - 5, y - 5, 10, 10)
+      } else {
         lastPoint = {
-          "x": x1,
-          "y": y1
+          "x": x,
+          "y": y
         }
       }
     }
     canvas.ontouchmove = function(aaa){
       event.preventDefault()
-      var x2 = aaa.touches[0].clientX
-      var y2 = aaa.touches[0].clientY
+      var x = aaa.touches[0].clientX
+      var y = aaa.touches[0].clientY
 
       if (!using) {return}
 
       if (eraserEnabled) {
-                
-          　　　　//获取两个点之间的剪辑区域四个端点
-          var asin = 10*Math.sin(Math.atan((y2-y1)/(x2-x1)));
-          var acos = 10*Math.cos(Math.atan((y2-y1)/(x2-x1)))
-          var x3 = x1+asin;
-          var y3 = y1-acos;
-          var x4 = x1-asin;
-          var y4 = y1+acos;
-          var x5 = x2+asin;
-          var y5 = y2-acos;
-          var x6 = x2-asin;
-          var y6 = y2+acos;
-
-          　　　　//保证线条的连贯，所以在矩形一端画圆
-          context.save()
-          context.beginPath()
-          context.arc(x2,y2,10,0,2*Math.PI);
-          context.clip()
-          context.clearRect(0,0,canvas.width,canvas.height);
-          context.restore();
-
-          　　　　//清除矩形剪辑区域里的像素
-          context.save()
-          context.beginPath()
-          context.moveTo(x3,y3);
-          context.lineTo(x5,y5);
-          context.lineTo(x6,y6);
-          context.lineTo(x4,y4);
-          context.closePath();
-          context.clip()
-          context.clearRect(0,0,canvas.width,canvas.height);
-          context.restore();
-
-          　　　　//记录最后坐标
-          x1 = x2;
-          y1 = y2;
+        context.clearRect(x - 5, y - 5, 10, 10)
       } else {
         var newPoint = {
-          "x": x2,
-          "y": y2
+          "x": x,
+          "y": y
         }
-        drawCircle(x2, y2,  Math.floor(lineWidth/2))
+        drawCircle(x, y,  Math.floor(lineWidth/2))
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)
         lastPoint = newPoint
       }
@@ -204,82 +158,33 @@ function listenToUser(canvas) {
     // 非触屏设备
     canvas.onmousedown = function(aaa) {
       event.preventDefault()
-      x1 = aaa.clientX
-      y1 = aaa.clientY
-      lastPoint = {
-        "x": x1,
-        "y": y1
-      }
-      console.log(x1,y1)
+      var x = aaa.clientX
+      var y = aaa.clientY
       using = true
       if (eraserEnabled) {
-                
-          context.save()
-          context.beginPath()
-          context.arc(x1,y1,10,0,2*Math.PI);
-          context.clip()
-          context.clearRect(0,0,canvas.width,canvas.height);
-          context.restore();
-
-
+        context.clearRect(x - 5, y - 5, 10, 10)
       } else {
-
-        drawCircle(x1, y1, Math.floor(lineWidth/2))
-
+        lastPoint = {
+          "x": x,
+          "y": y
+        }
       }
     }
     canvas.onmousemove = function(aaa) {
       event.preventDefault()
-       x2 = aaa.clientX
-       y2 = aaa.clientY
-       var newPoint = {
-        "x": x2,
-        "y": y2
-      }
+      var x = aaa.clientX
+      var y = aaa.clientY
+
       if (!using) {return}
 
       if (eraserEnabled) {
-        
-　　　　//获取两个点之间的剪辑区域四个端点
-        var asin = 10*Math.sin(Math.atan((y2-y1)/(x2-x1)));
-        var acos = 10*Math.cos(Math.atan((y2-y1)/(x2-x1)))
-        var x3 = x1+asin;
-        var y3 = y1-acos;
-        var x4 = x1-asin;
-        var y4 = y1+acos;
-        var x5 = x2+asin;
-        var y5 = y2-acos;
-        var x6 = x2-asin;
-        var y6 = y2+acos;
-        
-　　　　//保证线条的连贯，所以在矩形一端画圆
-        context.save()
-        context.beginPath()
-        context.arc(x2,y2,10,0,2*Math.PI);
-        context.clip()
-        context.clearRect(0,0,canvas.width,canvas.height);
-        context.restore();
-    
-　　　　//清除矩形剪辑区域里的像素
-        context.save()
-        context.beginPath()
-        context.moveTo(x3,y3);
-        context.lineTo(x5,y5);
-        context.lineTo(x6,y6);
-        context.lineTo(x4,y4);
-        context.closePath();
-        context.clip()
-        context.clearRect(0,0,canvas.width,canvas.height);
-        context.restore();
-        
-　　　　//记录最后坐标
-        x1 = x2;
-        y1 = y2;
-    }
-      
-    else {
-
-        drawCircle(x2, y2, Math.floor(lineWidth/2))
+        context.clearRect(x - 5, y - 5, 10, 10)
+      } else {
+        var newPoint = {
+          "x": x,
+          "y": y
+        }
+        drawCircle(x, y, Math.floor(lineWidth/2))
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)
         lastPoint = newPoint
       }
@@ -292,5 +197,5 @@ function listenToUser(canvas) {
   }
 
 }
-console.log(1)
+
 
